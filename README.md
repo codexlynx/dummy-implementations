@@ -12,10 +12,16 @@ Dummy implementations to explore the details and key aspects of schemes and prot
 * Fun!
 
 ## Description:
-Practical implementations of protocols and schemes in real systems add unnecessary noise and complexity that makes them difficult to investigate and study. These dummy implementations seek to represent the details and key aspects of those implementations beyond the documents that describe them (such as RFCs). They are the next step to a flowchart, allowing you to take advantage of the debugging facilities of a language like Python to analyze in depth the logics that make it up.  
+Practical implementations of protocols and schemes in real systems add unnecessary noise and complexity that makes them difficult to investigate and study. These dummy implementations seek to represent the details and key aspects of those implementations beyond their formal descriptions (such as RFCs). They are the next step to a flowchart, allowing you to take advantage of the debugging facilities of a language like Python to analyze in depth the logics that compose it.
 
 __Features:__
 * No network
 * No database
 * No complex
 * No noise
+
+## Implementations:
+
+|Directory|Description|Accuracy from formal definition|Accuracy from real implementations|
+|---------|-----------|----------------------------|-------------------------------|
+|[ad_kerberos_rc4_hmac](ad_kerberos_rc4_hmac)|AD Kerberos with RC4-HMAC encryption|Medium|Medium|
