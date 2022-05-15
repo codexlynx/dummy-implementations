@@ -14,18 +14,20 @@ Ticket cipher suite:
         https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/decrypting-the-selection-of-supported-kerberos-encryption-types/ba-p/1628797:
 """
 
-import random
 import pprint
 import json
 import time
 
 import crypto
 
+
 def dict2bytes(input_dict: dict) -> bytes:
     return bytes(json.dumps(input_dict), 'utf-8')
 
+
 def bytes2dict(input_bytes: bytes) -> dict:
     return json.loads(str(input_bytes, 'utf-8'))
+
 
 def timestamp() -> int:
     return int(time.time())
@@ -163,7 +165,7 @@ class Client:
             'timestamp': encrypted_timestamp,
             'sname': [f'krbtgt/{self.domain.upper()}'],  # Service Principal Name (SPN)
             'cname': self.username,
-            'till': '' # TODO
+            'till': ''  # TODO
         }
         print(f'[client] Full AS_REQ payload:')
         pprint.pprint(req)
@@ -221,7 +223,7 @@ class Service:
     def __init__(self, owner) -> None:
         self.owner = owner
 
-    def s6_AP_REP(self, AP_REQ: dict) -> dict:
+    def s6_AP_REP(self, AP_REQ: dict) -> None:
         ntml = LDAP_RESOURCES['users'][self.owner]['hash']
         if AP_REQ['type'] == 'AP_REQ' and crypto.verify(AP_REQ['tgs'], ntml): # Self hash
             decrypted_tgs = bytes2dict(crypto.decrypt(AP_REQ['tgs'], ntml))

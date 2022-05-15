@@ -4,6 +4,7 @@ from Crypto.Hash import HMAC
 
 import hashlib
 
+
 def hash_ntlm(password: str) -> str:
     """
     NTLM / NT Hash
@@ -11,6 +12,7 @@ def hash_ntlm(password: str) -> str:
     unicode = password.encode('UTF-16LE')
     nt = hashlib.new('md4', unicode)
     return nt.hexdigest()
+
 
 def encrypt(data: bytes, key: str) -> bytes:
     """
@@ -37,6 +39,7 @@ def encrypt(data: bytes, key: str) -> bytes:
     rc4_result = RC4.new(k3)
     return checksum + rc4_result.encrypt(toenc)
 
+
 def verify(encrypted: bytes, key: str) -> bool:
     k1 = key.encode('UTF-8')
 
@@ -58,6 +61,7 @@ def verify(encrypted: bytes, key: str) -> bool:
     checksum = encrypted[:16]
     return checksum == current_checksum
 
+
 def decrypt(encrypted: bytes, key: str) -> bytes:
     k1 = key.encode('UTF-8')
 
@@ -74,6 +78,7 @@ def decrypt(encrypted: bytes, key: str) -> bytes:
     enc = rc4.decrypt(encrypted[16:])
     return enc[8:]
 
+
 def random2key() -> str:
-    key = get_random_bytes(16) # 16 bytes key size
-    return key.decode('latin1') # Decoded in latin1 for serialization reasons
+    key = get_random_bytes(16)  # 16 bytes key size
+    return key.decode('latin1')  # Decoded in latin1 for serialization reasons
