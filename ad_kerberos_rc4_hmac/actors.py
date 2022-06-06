@@ -78,7 +78,7 @@ class KerberosServer:
             ntlm = self.accounts[user]['hash']
             print(f'[kdc] Stored NTLM hash for: {user} is: {ntlm}')
 
-            if crypto.verify(KRB_AS_REQ['timestamp'], ntlm): # TODO: Validate timestamp interval
+            if crypto.verify(KRB_AS_REQ['timestamp'], ntlm):  # TODO: Validate timestamp interval
                 session_key = crypto.random2key()
                 print(f'[kdc] Random session key: {[session_key]}')
                 rep = {
@@ -110,7 +110,7 @@ class KerberosServer:
     def s4_KRB_TGS_REP(self, KRB_TGS_REQ: dict) -> dict:
         if KRB_TGS_REQ['type'] == 'TGS_REQ' and crypto.verify(KRB_TGS_REQ['tgt'], self.accounts['krbtgt']['hash']):
             decrypted_tgt = bytes2dict(crypto.decrypt(KRB_TGS_REQ['tgt'], self.accounts['krbtgt']['hash']))
-            # TODO: Validate TGT endtime
+            # TODO: Validate TGT end time
             print(f'[kdc] Received TGT key is: {[decrypted_tgt["key"]]}')
             decrypted = bytes2dict(crypto.decrypt(KRB_TGS_REQ['encrypted'], decrypted_tgt['key']))
             service, domain = KRB_TGS_REQ['sname'][0].split('/')
